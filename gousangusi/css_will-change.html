@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>CSS will-change Demo</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<style>
+			html, body, #root {height: 100%; margin: 0;}
+			#root {
+				position: relative;
+				width: 80%;
+				height: 100%;
+				overflow: hidden;
+				background-image: url('test1.jpg');
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
+			}
+			button {
+				position: absolute;
+				width: 800px;
+				height: 800px;
+				border: 0;
+				outline: 0;
+				opacity: 0.4;
+				background-color: transparent;
+				background-image: url('test2.jpg');
+				background-size: cover;
+				background-position: center center;
+				background-repeat: no-repeat;
+			}
+			button {
+				transition: transform 3s linear;
+			}
+			#root.enabled button {
+				will-change: transform;
+			}
+			#root:hover button {
+				transform: rotate(3600deg);
+			}
+		</style>
+	</head>
+	<body>
+		<div id="root">
+			<!-- <button></button> -->
+		</div>
+
+		<script>
+			var root = document.querySelector('#root');
+
+			function random(int) {
+				return Math.random();
+			}
+
+			function addButton(){
+				var button = document.createElement('button');
+				button.style.left = random(400) - 200 + 'px';
+				button.style.top = random(400) - 200 + 'px';
+				button.style.transitonDuration = random(10) + 's';
+				root.appendChild(button);
+			}
+
+			if (location.search === '?enabled') {
+				root.className = 'enabled';
+			}
+
+			for (var i = 0; i < 20; i++) {
+				addButton();
+			}
+		</script>
+	</body>
+</html>
